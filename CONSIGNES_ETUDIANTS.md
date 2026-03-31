@@ -56,6 +56,32 @@ Format : `MAJOR.MINOR.PATCH` (ex: 1.0.0, 1.0.1)
 
 - Tags sur **main** : `v1.0.0`, `v1.0.1`, etc.
 
+### CHANGELOG
+
+Le fichier `CHANGELOG.md` documente l'historique des versions. Format recommandé :
+
+```markdown
+# Changelog
+
+## [1.0.1] - 2026-04-15
+
+### Fixed
+
+- Correction du prix du voyage lunaire
+
+## [1.0.0] - 2026-03-31
+
+### Added
+
+- Page d'accueil avec destinations
+- Grille tarifaire complète
+- FAQ pour les voyageurs
+
+### Fixed
+
+- Amélioration du slogan
+```
+
 ### Interdictions
 
 ❌ Pas de commit direct sur `main` ou `develop` (sauf consigne explicite)  
@@ -97,7 +123,7 @@ git branch -a  # Vérifier les branches
 
 ### Tâche 4 : Documents fondateurs
 
-1. Créer une branche `feature/<prenom>-docs-fondateurs`
+1. Créer une branche feature appropriée
 2. Créer le dossier `docs/` avec :
 
 **`docs/vision.md`** :
@@ -144,7 +170,7 @@ Rendre les voyages spatiaux accessibles à tous les terriens.
 
 ### Tâche 5 : Page d'accueil
 
-1. Créer `feature/<prenom>-homepage` depuis `develop`
+1. Créer une branche feature pour la page d'accueil depuis `develop`
 2. Créer `content/homepage.md` :
 
 ```markdown
@@ -165,7 +191,7 @@ Réservez dès maintenant votre voyage de rêve !
 
 ### Tâche 6 : Tarification
 
-1. Créer `feature/<prenom>-pricing` depuis `develop`
+1. Créer une branche feature pour la tarification depuis `develop`
 2. Créer `content/pricing.md` :
 
 ```markdown
@@ -188,7 +214,7 @@ _Assurance cosmique incluse_
 
 ### Tâche 7 : FAQ
 
-1. Créer `feature/<prenom>-faq` depuis `develop`
+1. Créer une branche feature pour la FAQ depuis `develop`
 2. Créer `docs/faq.md` :
 
 ```markdown
@@ -224,13 +250,7 @@ Menu gastronomique lyophilisé 5 étoiles.
 
 1. Se placer sur `develop`
 2. Merger les 3 features (homepage, pricing, faq) dans `develop`
-3. Utiliser des **merge commits** (pas de fast-forward) :
-
-```bash
-git merge --no-ff feature/<prenom>-homepage
-git merge --no-ff feature/<prenom>-pricing
-git merge --no-ff feature/<prenom>-faq
-```
+3. Utiliser des **merge commits** (option `--no-ff`)
 
 4. Pousser `develop`
 
@@ -244,7 +264,7 @@ git merge --no-ff feature/<prenom>-faq
 
 **Membre 1** :
 
-1. Créer `feature/<prenom>-readme-a` depuis `develop`
+1. Créer une branche feature depuis `develop`
 2. Modifier `README.md` (ligne 3) :
 
 ```markdown
@@ -256,7 +276,7 @@ L'agence de voyages qui vous emmène explorer l'univers infini.
 
 **Membre 2** :
 
-1. Créer `feature/<prenom>-readme-b` depuis `develop`
+1. Créer une branche feature depuis `develop`
 2. Modifier `README.md` (ligne 3, même ligne !) :
 
 ```markdown
@@ -268,8 +288,8 @@ L'agence de voyages qui vous propulse vers les étoiles.
 
 ### Tâche 10 : Créer et résoudre le conflit
 
-1. Merger d'abord `feature/<prenom>-readme-a` dans `develop` → OK
-2. Tenter de merger `feature/<prenom>-readme-b` dans `develop` → **CONFLIT !**
+1. Merger d'abord la première branche dans `develop` → OK
+2. Tenter de merger la seconde branche dans `develop` → **CONFLIT !**
 3. Résoudre le conflit en gardant une version cohérente (au choix, ou combiner)
 4. Faire un commit de résolution avec un message approprié (Conventional Commits)
 5. Pousser `develop`
@@ -280,12 +300,12 @@ L'agence de voyages qui vous propulse vers les étoiles.
 
 ### Tâche 11 : Démarrer la release
 
-1. Créer `release/1.0.0` depuis `develop`
+1. Créer une branche release pour la version 1.0.0 depuis `develop`
 2. Pousser la branche
 
 ### Tâche 12 : Préparer le CHANGELOG
 
-1. Sur `release/1.0.0`, créer `CHANGELOG.md` :
+1. Sur la branche release, créer `CHANGELOG.md` :
 
 ```markdown
 # Changelog
@@ -319,32 +339,15 @@ Version: 1.0.0
 ### Tâche 14 : Correction en release
 
 1. Détecter une faute dans `content/pricing.md` (ex: "Assurance cosmique inclue" → "incluse")
-2. Corriger sur `release/1.0.0`
+2. Corriger sur la branche release
 3. Faire un commit avec un message approprié (Conventional Commits)
 
 ### Tâche 15 : Finaliser la release
 
-1. Merger `release/1.0.0` dans `main` :
-
-```bash
-git checkout main
-git merge --no-ff release/1.0.0
-```
-
-2. Créer le tag `v1.0.0` sur `main` :
-
-```bash
-git tag -a v1.0.0 -m "Release 1.0.0 - Premier lancement GalaxyTrip"
-```
-
-3. Pousser `main` et le tag :
-
-```bash
-git push origin main
-git push origin v1.0.0
-```
-
-4. Merger `release/1.0.0` (ou `main`) dans `develop` pour réintégrer les commits de release
+1. Merger la branche release dans `main` (avec `--no-ff`)
+2. Créer le tag `v1.0.0` sur `main` avec un message descriptif
+3. Pousser `main` et le tag sur GitHub
+4. Merger la branche release (ou `main`) dans `develop` pour réintégrer les commits de release
 5. Pousser `develop`
 
 ---
@@ -359,36 +362,19 @@ Quelqu'un constate une **erreur critique** dans `content/pricing.md` en producti
 
 ### Tâche 17 : Créer le hotfix
 
-1. Créer `hotfix/1.0.1` depuis `main`
-2. Corriger le prix dans `content/pricing.md` :
-
-```markdown
-| Lune | 3 jours | 5 000 | Débutant |
-```
+1. Créer une branche hotfix pour la version 1.0.1 depuis `main`
+2. Corriger le prix de la Lune dans `content/pricing.md` (5 000 € au lieu de 50 000 €)
 
 3. Faire un commit avec un message approprié (Conventional Commits)
 
 ### Tâche 18 : Finaliser le hotfix
 
-1. Merger `hotfix/1.0.1` dans `main`
-2. Créer le tag `v1.0.1` :
-
-```bash
-git tag -a v1.0.1 -m "Hotfix 1.0.1 - Correction prix Lune"
-```
-
+1. Merger la branche hotfix dans `main`
+2. Créer le tag `v1.0.1` avec un message descriptif
 3. Pousser `main` et le tag
-4. Merger `hotfix/1.0.1` dans `develop` (pour réintégration)
+4. Merger la branche hotfix dans `develop` (pour réintégration)
 5. Pousser `develop`
-6. Mettre à jour `CHANGELOG.md` sur `develop` :
-
-```markdown
-## [1.0.1] - 2026-03-31
-
-### Fixed
-
-- Correction du prix du voyage lunaire (5 000 € au lieu de 50 000 €)
-```
+6. Mettre à jour `CHANGELOG.md` sur `develop` avec les corrections apportées
 
 ---
 
@@ -403,12 +389,7 @@ git tag -a v1.0.1 -m "Hotfix 1.0.1 - Correction prix Lune"
 ### Tâche 20 : Annuler avec revert
 
 1. Constater l'erreur (la section Valeurs était importante !)
-2. Annuler le commit avec `git revert` (PAS de reset) :
-
-```bash
-git revert <hash-du-commit-erroné>
-```
-
+2. Annuler le commit avec `git revert` (PAS de reset)
 3. Git créera automatiquement un message de revert, vous pouvez le personnaliser si nécessaire
 4. Pousser `develop`
 
