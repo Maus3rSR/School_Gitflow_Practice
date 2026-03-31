@@ -8,6 +8,30 @@ Votre équipe (3–5 personnes) vient d'être recrutée par **GalaxyTrip**, une 
 
 ---
 
+## ⏱️ Durée et versions
+
+### 📘 Atelier de base (1h30-2h)
+
+**Phases A à F** — Tâches 1 à 20
+
+- Initialisation GitFlow
+- Features en parallèle
+- Résolution de conflits
+- Release et hotfix
+- Revert
+
+### 📗 Atelier avancé (3h-4h)
+
+**Phases A à J** — Tâches 1 à 30
+
+- Tout l'atelier de base
+- Gestion avancée des branches (stash, amend, dépendances)
+- Documentation collaborative
+- Rebase et historique propre
+- Debugging (bisect, blame, cherry-pick)
+
+---
+
 ## 🎯 Objectifs pédagogiques
 
 - Maîtriser le cycle **GitFlow** (main, develop, feature/_, release/_, hotfix/\*)
@@ -89,7 +113,7 @@ Le fichier `CHANGELOG.md` documente l'historique des versions. Format recommand�
 
 ---
 
-## �️ Phase A — Initialisation (fondations)
+## 🛠️ Phase A — Initialisation (fondations)
 
 ### Tâche 1 : Création du dépôt
 
@@ -395,21 +419,314 @@ Quelqu'un constate une **erreur critique** dans `content/pricing.md` en producti
 
 ---
 
+## 🔄 Phase G — Gestion avancée des branches
+
+### Tâche 21 : Feature avec dépendance
+
+> 💡 **Objectif** : Comprendre les dépendances entre features
+
+1. Créer une branche feature pour ajouter `content/partners.md` (partenaires spatiaux)
+2. Créer le fichier avec une liste de partenaires :
+
+```markdown
+# Nos Partenaires Spatiaux 🤝
+
+- **SpaceX** : Fournisseur de fusées
+- **NASA** : Expertise technique
+- **ESA** : Coordination européenne
+- **Blue Origin** : Vols suborbitaux
+```
+
+3. Faire un commit
+4. Créer une **seconde branche feature** depuis la première (pas depuis develop) pour ajouter `content/testimonials.md`
+5. Créer le fichier avec des témoignages clients :
+
+```markdown
+# Témoignages Clients ⭐
+
+> "Un voyage inoubliable vers Mars !" - Jean D.
+
+> "L'équipe GalaxyTrip est professionnelle et rassurante." - Marie L.
+
+> "La vue de la Terre depuis l'espace... magique !" - Ahmed K.
+```
+
+6. Faire un commit
+7. Merger la première feature (partners) dans `develop`
+8. Merger la seconde feature (testimonials) dans `develop`
+9. Pousser `develop`
+
+### Tâche 22 : Stash — Sauver du travail en cours
+
+> 💡 **Objectif** : Gérer une erreur de contexte avec git stash
+
+1. Se placer sur `develop`
+2. Commencer à modifier `README.md` (ajouter une ligne de description)
+3. **STOP** — Réaliser que cette modification devrait être sur une branche feature !
+4. Utiliser `git stash` pour sauvegarder le travail en cours
+5. Créer une branche feature appropriée
+6. Appliquer le stash avec `git stash pop`
+7. Finaliser la modification et faire un commit
+8. Merger dans `develop`
+
+### Tâche 23 : Amend — Corriger un commit récent
+
+> 💡 **Objectif** : Corriger un commit avant de le pousser
+
+1. Sur une branche feature, créer `docs/safety.md` :
+
+```markdown
+# Sécurité à Bord 🛡️
+
+## Équipement fourni
+
+- Combinaison spatiale
+- Casque avec communication
+- Réserve d'oxygène (48h)
+
+## Procédures d'urgence
+
+- Évacuation rapide
+- Capsule de sauvetage
+- Contact permanent avec la Terre
+```
+
+2. Faire un commit avec une **faute volontaire** dans le message (ex: "docs: add safty guide")
+3. Utiliser `git commit --amend` pour corriger le message
+4. Pousser la branche et merger dans `develop`
+
+---
+
+## 📚 Phase H — Documentation collaborative
+
+### Tâche 24 : Modifications parallèles sans conflit
+
+> 💡 **Objectif** : Comprendre quand Git merge automatiquement
+
+**2 membres travaillent en parallèle** :
+
+**Membre 1** :
+
+1. Créer une branche feature
+2. Ajouter une section "Contact" à la fin de `README.md`
+3. Faire un commit et pousser
+
+**Membre 2** :
+
+1. Créer une branche feature (depuis develop)
+2. Modifier le début de `README.md` (changer la description ligne 3)
+3. Faire un commit et pousser
+
+**Intégrateur** :
+
+1. Merger les deux features dans `develop`
+2. Observer que Git merge automatiquement (pas de conflit car lignes différentes)
+3. Pousser `develop`
+
+### Tâche 25 : Enrichir la documentation
+
+1. Créer une branche feature
+2. Ajouter un fichier `AUTHORS.md` :
+
+```markdown
+# Contributeurs GalaxyTrip 👨‍🚀👩‍🚀
+
+## Équipe de développement
+
+- [Prénom 1] - Développeur
+- [Prénom 2] - Développeur
+- [Prénom 3] - Développeur
+- [Prénom 4] - Intégrateur
+- [Prénom 5] - Développeur
+
+## Remerciements
+
+Merci à tous les voyageurs intergalactiques qui nous font confiance !
+```
+
+3. Mettre à jour `README.md` pour ajouter un badge de version :
+
+```markdown
+# 🚀 GalaxyTrip — Voyages Intergalactiques
+
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
+
+L'agence de voyages qui vous emmène au-delà des étoiles.
+```
+
+4. Faire un commit et merger dans `develop`
+
+---
+
+## 📦 Phase H-bis — Release 1.1.0
+
+### Tâche 25-bis : Préparer la release 1.1.0
+
+> 💡 **Objectif** : Livrer les nouvelles fonctionnalités (partners, testimonials, safety, AUTHORS)
+
+1. Créer une branche release pour la version 1.1.0 depuis `develop`
+2. Mettre à jour `CHANGELOG.md` :
+
+```markdown
+## [1.1.0] - 2026-04-01
+
+### Added
+
+- Page partenaires spatiaux
+- Témoignages clients
+- Guide de sécurité à bord
+- Fichier des contributeurs
+- Badge de version dans le README
+
+### Changed
+
+- Amélioration de la description du README
+```
+
+3. Mettre à jour le badge de version dans `README.md` (passer de 1.0.1 à 1.1.0)
+4. Faire un commit
+5. Merger la branche release dans `main`
+6. Créer le tag `v1.1.0` sur `main` avec un message descriptif
+7. Pousser `main` et le tag
+8. Merger la branche release dans `develop`
+9. Pousser `develop`
+
+---
+
+## 🔧 Phase I — Rebase et historique propre
+
+### Tâche 26 : Rebase interactif — Nettoyer l'historique
+
+> 💡 **Objectif** : Squash plusieurs commits en un seul
+
+1. Créer une branche feature pour `content/destinations.md`
+2. Faire **3 commits séparés** (un par destination) :
+   - Commit 1 : Ajouter la section Mars
+   - Commit 2 : Ajouter la section Jupiter
+   - Commit 3 : Ajouter la section Titan
+
+3. Utiliser `git rebase -i HEAD~3` pour squash les 3 commits en 1 seul
+4. Réécrire le message de commit final
+5. Pousser la branche
+6. Merger dans `develop`
+
+### Tâche 27 : Rebase sur develop — Maintenir une feature à jour
+
+> 💡 **Objectif** : Rebaser une feature longue sur develop
+
+**Simulation** :
+
+1. Créer une branche feature `insurance` pour `content/insurance.md`
+2. Faire un commit initial
+3. **Pendant ce temps**, un autre membre ajoute du contenu sur `develop` et pousse
+4. Rebaser la branche `insurance` sur le dernier `develop`
+5. Résoudre les conflits éventuels
+6. Finaliser la feature et merger dans `develop`
+
+### Tâche 28 : Cherry-pick — Sélectionner un commit spécifique
+
+> 💡 **Objectif** : Appliquer un commit d'une branche à une autre
+
+**Scénario** : Pendant la préparation de la release 1.2.0, une correction importante est committée sur `develop`.
+
+1. Créer une branche release pour la version 1.2.0 depuis `develop`
+2. Pendant la release, un membre corrige une faute dans `docs/faq.md` sur `develop` et pousse
+3. Identifier le hash de ce commit de correction
+4. Sur la branche release 1.2.0, utiliser `git cherry-pick` pour appliquer uniquement ce commit
+5. Vérifier que le commit apparaît sur la release avec un nouveau hash
+6. **Ne pas finaliser cette release pour l'instant** (elle servira pour la Phase J)
+
+---
+
+## 🔍 Phase J — Debugging et investigation
+
+### Tâche 29 : Git bisect — Trouver un commit fautif
+
+> 💡 **Objectif** : Débugger avec git bisect
+
+**Préparation** : Introduire volontairement une "régression"
+
+1. Sur `develop`, modifier `content/pricing.md` : changer le prix de Mars à 5 000 000 € (erreur)
+2. Faire un commit
+3. Ajouter d'autres commits innocents (modifications de docs)
+
+**Debugging** :
+
+1. Constater que le prix de Mars est incorrect
+2. Utiliser `git bisect start`
+3. Marquer le commit actuel comme mauvais : `git bisect bad`
+4. Marquer un ancien commit (avant l'erreur) comme bon : `git bisect good <hash>`
+5. Git va proposer des commits à tester
+6. Tester chaque commit et marquer `good` ou `bad`
+7. Git identifiera le commit fautif
+8. Terminer avec `git bisect reset`
+9. Corriger l'erreur avec un nouveau commit
+
+### Tâche 30 : Git blame et log — Investigation
+
+> 💡 **Objectif** : Investiguer l'historique d'un fichier
+
+1. Utiliser `git blame content/pricing.md` pour voir qui a modifié chaque ligne
+2. Identifier la ligne avec le prix de la Lune
+3. Utiliser `git log -p -- content/pricing.md` pour voir l'historique complet du fichier
+4. Utiliser `git log --oneline --follow -- content/pricing.md` pour suivre les renommages
+5. Documenter les découvertes dans un fichier `docs/investigation.md`
+
+### Tâche 31 : Finaliser la release 1.2.0
+
+> 💡 **Objectif** : Livrer les dernières fonctionnalités et corrections
+
+1. Retourner sur la branche release 1.2.0 (créée à la Tâche 28)
+2. Mettre à jour `CHANGELOG.md` :
+
+```markdown
+## [1.2.0] - 2026-04-05
+
+### Added
+
+- Page destinations détaillées (Mars, Jupiter, Titan)
+- Assurance voyage spatiale
+
+### Fixed
+
+- Correction de fautes dans la FAQ
+- Correction du prix de Mars (régression corrigée)
+```
+
+3. Mettre à jour le badge de version dans `README.md` (passer de 1.1.0 à 1.2.0)
+4. Faire un commit
+5. Merger la branche release dans `main`
+6. Créer le tag `v1.2.0` sur `main` avec un message descriptif
+7. Pousser `main` et le tag
+8. Merger la branche release dans `develop`
+9. Pousser `develop`
+
+---
+
 ## ✅ Livrables finaux
 
 À la fin de l'atelier, votre dépôt GitHub doit contenir :
 
 ### Branches
 
-- `main` (avec v1.0.0 et v1.0.1)
+- `main` (avec v1.0.0, v1.0.1, v1.1.0 et v1.2.0)
 - `develop` (à jour avec tous les merges)
 
 ### Tags
 
+**Atelier de base** :
+
 - `v1.0.0` sur main
 - `v1.0.1` sur main
 
+**Atelier avancé (en plus)** :
+
+- `v1.1.0` sur main
+- `v1.2.0` sur main
+
 ### Fichiers
+
+**Atelier de base (Phases A-F)** :
 
 ```
 README.md
@@ -423,13 +740,37 @@ content/
   pricing.md
 ```
 
+**Atelier avancé (Phases G-J)** :
+
+```
+AUTHORS.md
+docs/
+  safety.md
+  investigation.md
+content/
+  partners.md
+  testimonials.md
+  destinations.md
+  insurance.md
+```
+
 ### Historique Git propre
+
+**Atelier de base** :
 
 - Pas de commits directs sur `main` (sauf merges)
 - Features mergées dans `develop`
 - Release et hotfix correctement intégrés
 - Conflit résolu proprement
 - Revert visible dans l'historique
+
+**Atelier avancé (en plus)** :
+
+- Commits squashés avec rebase interactif
+- Feature rebasée sur develop
+- Cherry-pick appliqué sur release
+- Bisect utilisé pour trouver une régression
+- Stash utilisé pour sauver du travail
 
 ---
 
