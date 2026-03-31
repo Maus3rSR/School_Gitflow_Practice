@@ -115,7 +115,7 @@ Le fichier `CHANGELOG.md` documente l'historique des versions. Format recommand�
 
 ## 🛠️ Phase A — Initialisation (fondations)
 
-### Tâche 1 : Création du dépôt
+### Tâche 1 : Création du dépôt (si pas déjà fait)
 
 1. Créer un dépôt GitHub public nommé `galaxytrip-gitflow`
 2. Ajouter un `README.md` minimal :
